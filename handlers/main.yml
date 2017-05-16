@@ -4,3 +4,19 @@
   service: 
     name: "{{ openldap['service']['name'] }}"
     state: restarted
+
+- name: run authconfig
+  # need "--nostart" to prevent sssd and nscd from conflicting with each other
+  command: >
+    authconfig
+    --updateall
+    --enableldap
+    --enableldapauth
+    --enableldaptls
+    --ldaploadcacert {{ openldap['config']['cacert_path'] }}
+    --enablecache
+    --ldapserver {{ openldap['config']['uri'] }}
+    --ldapbasedn {{ openldap['config']['basedn'] }}
+    --nostart
+  notify:
+    - restart caching service

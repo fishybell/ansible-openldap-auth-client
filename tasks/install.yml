@@ -1,18 +1,6 @@
 ---
 # filename: roles/openldap-auth-client/tasks/install.yml
-- name: copy sssd file
-  template:
-    src: sssd.conf.j2
-    dest: /etc/sssd/sssd.conf
-    force: true
-    backup: true
-    mode: 0600
-  notify:
-    - restart caching service
-
 - name: install openldap client
   yum:
     name: "{{ openldap['pkgs'] }}"
     update_cache: "{{ update_cache }}"
-  notify:
-    - restart caching service

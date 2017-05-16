@@ -1,18 +1,13 @@
 ---
 # filename: roles/openldap-auth-client/tasks/configure.yml
 # run authconfig instead of manually editing files
-- name: run authconfig
-  # need "--nostart" to prevent sssd and nscd from conflicting with each other
-  command: >
-    authconfig
-    --updateall
-    --enableldap
-    --enableldapauth
-    --enableldaptls
-    --ldaploadcacert {{ openldap['config']['cacert_path'] }}
-    --enablecache
-    --ldapserver {{ openldap['config']['uri'] }}
-    --ldapbasedn {{ openldap['config']['basedn'] }}
-    --nostart
+- name: copy sssd file
+  template:
+    src: sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    force: false
+    backup: true
+    mode: 0600
   notify:
+    - run authconfig
     - restart caching service
