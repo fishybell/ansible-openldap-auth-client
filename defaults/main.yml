@@ -1,17 +1,17 @@
 ---
 # defaults file for openldap-auth-client
-update_cache: true
+update_cache: false
 openldap:
   pkgs: 
-    - libpam-ldap
-    - nscd
-    - sysv-rc-conf
-    - ldap-auth-client
+    - openldap-clients
+    - sssd-ldap
+    - authconfig
   service:
-    name: nscd
+    name: sssd
   config:
     base: dc=local,dc=com
     uri: ldap://ldap.local.com
+    basedn: dc=local,dc=com
     rootbinddn: cn=admin,dc=local,dc=com
     port: 389
     secret: secret

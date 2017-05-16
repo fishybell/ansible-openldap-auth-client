@@ -9,7 +9,7 @@ Ansible role for clients authentication into OpenLdap.
 Requirements
 ------------
 
-Currently working with Debian/Ubuntu.
+Currently working with CentOS 7.
 
 Role Variables
 --------------
@@ -40,7 +40,7 @@ Here's an example playbook.
     - hosts: servers
       become: true
       roles:
-         - { role: openldap-auth-client, when: ansible_distribution_release == 'trusty' }
+         - { role: openldap-auth-client, when: ansible_distribution_major_version == '7' }
 
 License
 -------

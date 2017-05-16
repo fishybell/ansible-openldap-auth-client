@@ -1,6 +1,6 @@
 ---
 # handlers file for openldap-auth-client
-- name: restart nscd service
+- name: restart caching service
   service: 
     name: "{{ openldap['service']['name'] }}"
     state: restarted
